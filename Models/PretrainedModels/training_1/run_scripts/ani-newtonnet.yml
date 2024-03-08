@@ -1,0 +1,70 @@
+general:
+  me: ani-newtonnet.yml
+  device: [cuda:0, cuda:1, cuda:2, cuda:3]
+  driver: newtonnet.py
+  output: [local/newtonnet/0.1-iv+ln-cont , 1] # root, iter
+
+data:
+  root: /global/scratch/jerry-li1996/ANI-1/ANI-1_release 
+  train: [1,2,3,4,5,6,7,8]
+  test: False
+  cutoff: 5.0
+  subtract_self_energy: True
+  convert_unit: True
+  test_size_per_molecule: 0.1
+  train_test_split_random_state: 90
+  train_size_proportion: 0.09
+  val_size_proportion: 0.01
+  train_val_split_random_state: 1
+
+model:
+  pre_trained: /global/scratch/jerry-li1996/H2Combustion/best_models/best_model_state.tar
+  activation: swish #ssp
+  requires_dr: True  # edit from false
+  w_energy: 1.0
+  w_force: 0.0
+  wf_decay: 0.0     # if 0.01: wf=1 at epoch=460
+  w_f_mag: 0.0
+  w_f_dir: 0.0
+  resolution: 20
+  n_features: 128
+  n_interactions: 3
+  cutoff_network: poly  # poly, cosine
+  normalize_atomic: True       # set to True if you want to do MD
+  shared_interactions: False
+  normalize_filter: False
+  return_latent: False
+  layer_norm: True
+  double_update_latent: True  # new added
+
+training:
+  epochs: 5000
+  tr_batch_size: 64  #32
+  val_batch_size: 400 #32
+  tr_rotations: 0
+  val_rotations: 0
+  tr_frz_rot: False
+  val_frz_rot: False
+  tr_keep_original: True         # ##
+  val_keep_original: True
+  shuffle: True
+  drop_last: True
+  lr: 1.0e-4 #0.0005
+  lr_scheduler: [plateau, 15, 25, 0.7, 1.0e-6]
+#  lr_scheduler: [decay, 0.05]
+  weight_decay: 0 #3.0e-5
+  dropout: 0.0
+
+hooks:
+  vismolvector3d: False
+
+checkpoint:
+  log: 1
+  val: 1
+  test: 1
+  model: 100
+  verbose: False
+
+
+
+

@@ -1,0 +1,62 @@
+general:
+  me: scripts/ani/wb97_newton.yml
+  device: [cuda:0, cuda:1, cuda:2, cuda:3]
+  driver: scripts/ani/run_newtonnet.py
+  output: [local/wb97dz_newton_ln_10%, 9] # root, iter
+
+data:
+  root: /global/scratch/ozhang/ani1x
+  train: wb97xdz.npz
+  train_size: 0.1
+  cutoff: 5.0
+  test_size: 5000
+  val_size: 5000
+  random_state: 1
+
+model:
+  pre_trained: /global/home/users/ozhang/mlff/H2Combustion/local/wb97dz_newton_ln_10%/training_8/models/best_model_state.tar
+  activation: swish #ssp
+  requires_dr: True
+  w_energy: 1.0
+  w_force: 2.0
+  wf_decay: 0.0     # if 0.01: wf=1 at epoch=460
+  w_f_mag: 0.0
+  w_f_dir: 0.0
+  resolution: 20
+  n_features: 128
+  n_interactions: 3
+  cutoff_network: poly  # poly, cosine
+  normalize_atomic: True       # set to True if you want to do MD
+  shared_interactions: False
+  normalize_filter: False
+  return_latent: False
+  layer_norm: True
+  double_update_latent: True  # EDITED
+
+training:
+  epochs: 50000
+  tr_batch_size: 50 # accumulation step 4 
+  val_batch_size: 50
+  tr_rotations: 0
+  val_rotations: 0
+  tr_frz_rot: False
+  val_frz_rot: False
+  tr_keep_original: True         # ##
+  val_keep_original: True
+  shuffle: True
+  drop_last: True
+  lr: 0.00012
+  lr_scheduler: [plateau, 15, 15, 0.7, 1.0e-6]
+#  lr_scheduler: [decay, 0.05]
+  weight_decay: 0 #3.0e-5
+  dropout: 0.0
+
+hooks:
+  vismolvector3d: False
+
+checkpoint:
+  log: 1
+  val: 1
+  test: 1
+  model: 100
+  verbose: False

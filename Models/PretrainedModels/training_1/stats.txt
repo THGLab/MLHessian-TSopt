@@ -1,0 +1,5 @@
+Train data: 1784339
+Val data: 198260
+Test data: 2231376
+Normalizer: (-1501.359665812431, 314.2641730691134)
+Test energy hash: de046abac5e9c5276812ca0eec1218b9b515127e
