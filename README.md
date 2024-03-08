@@ -9,6 +9,7 @@ This repository contains wrapper scripts for running and analyzing transition st
 - `Scripts/noise.ipynb`: Wrapper notebook for initial guess geometry generation and subsequent noising of Sella benchmark reactions.
 - `Scripts/opt/nn_sella_quacc.py`: Wrapper script for NewtonNet-based optimizations.
 - `Scripts/opt/dft_sella_quacc.py`: Wrapper script for DFT (Density Functional Theory) method, specifically using the wb97x/6-31G* level of theory.
+- `Scripts/gather.ipynb`: Wrapper notebook for optimization data retrieval.
 
 ## Models
 
